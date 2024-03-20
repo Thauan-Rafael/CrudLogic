@@ -1,0 +1,64 @@
+*{
+  box-sizing: border-box;
+}
+body, #root{
+  height: 100vh;
+}
+#root{
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+#pageTitle{
+  width: 100%;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 1%;
+}
+#entries{
+  margin-top: 2%;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 2fr;
+  gap: 1%;
+  text-align: center;
+  align-items: center;
+}
+.btn{
+  border: 2px solid black;
+  border-radius: 20vh;
+}
+#cardsSection{
+  align-items: center;
+  display: flex;
+  gap: 2%;
+}
+#crudCard{
+  margin-top: 5%;
+  color: white;
+  width: 35%;
+  height: 50%;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  border: 3px solid black;
+}
+#crudCard:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+#cardButtons{
+  display: flex;
+}
+.cardBtn{
+  color: white;
+  font-size: 2.5vh;
+  height: 60%;
+  width: 100%;
+  margin: 0 auto 0 auto;
+}
+.cardBtn:hover{
+  color: white;
+  border: 2px solid black;
+  transform: scale(1.1);
+  cursor: pointer;
+}

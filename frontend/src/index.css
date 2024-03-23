@@ -6,7 +6,7 @@ body, #root{
 }
 #root{
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto 1fr auto;
 }
 #pageTitle{
   width: 100%;
@@ -26,6 +26,13 @@ body, #root{
 .btn{
   border: 2px solid black;
   border-radius: 20vh;
+  text-shadow: 2px 2px black;
+}
+.btn:hover{
+  color: white;
+  border: 2px solid black;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 #cardsSection{
   align-items: center;
@@ -33,7 +40,6 @@ body, #root{
   gap: 2%;
 }
 #crudCard{
-  margin-top: 5%;
   color: white;
   width: 35%;
   height: 50%;
@@ -41,6 +47,7 @@ body, #root{
   text-align: center;
   align-items: center;
   border: 3px solid black;
+  text-shadow: 2px 2px black;
 }
 #crudCard:hover{
   transform: scale(1.1);
@@ -56,9 +63,14 @@ body, #root{
   width: 100%;
   margin: 0 auto 0 auto;
 }
-.cardBtn:hover{
+#sqlDescription{
+  display: flex;
+  background-color: black;
   color: white;
-  border: 2px solid black;
-  transform: scale(1.1);
-  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  padding: 1% 0 1% 0;
+}
+#sqlDescription h2{
+  font-size: 2vw;
 }

@@ -1,6 +1,7 @@
-import React from "react";
-function App() {
+import React, { useEffect } from "react";
+function App() { 
   const [cards, setCards] = React.useState([]);
+  const [action, setAction] = React.useState('Do a SQL Action and will appear here!')
   function createCard(event){
     event.preventDefault();
     if(cards.length >=3){
@@ -8,25 +9,32 @@ function App() {
       return
     }
     else if(cards.length < 3){
+      let cardTitle = document.querySelector('#cardTitle').value;
+      let cardText = document.querySelector('#cardText').value;
+      let cardColor = document.querySelector('#cardColor').value;
       document.querySelector('#entries').submit();
+      setAction(`INSERT INTO cards (title,text,color) VALUES (${cardTitle},${cardText},${cardColor})`);
     }
   }
   React.useEffect(() => {
-    fetch('http://localhost:3000/checkCards')
-        .then(response => response.json())
-        .then(data => {
-            if (data.exists) {
-              let rowCards = data.rows;
-              setCards(cards => {
-              return rowCards.map(row => {
-                let { title: dbTitle, text: dbText, color: dbColor } = row;
-                 return <Card key={row.id} id={row.id} title={dbTitle} text={dbText} color={dbColor}></Card>;
+    function changeCards(){
+      fetch('http://localhost:3000/checkCards')
+          .then(response => response.json())
+          .then(data => {
+              if (data.exists) {
+                let rowCards = data.rows;
+                setCards(cards => {
+                return rowCards.map(row => {
+                  let { title: dbTitle, text: dbText, color: dbColor } = row;
+                   return <Card key={row.id} id={row.id} title={dbTitle} text={dbText} color={dbColor} changeCards={changeCards}></Card>;
+                })
               })
-            })
-        }})
-        .catch(error => {
-            console.error('Error in connection:', error);
-        });
+            }})
+          .catch(error => {
+              console.error('Error in connection:', error);
+          });
+    }
+    changeCards();
   },[]);
   return (
     <>
@@ -60,6 +68,9 @@ function App() {
     <div id="cardsSection" className="container-fluid">
     {cards}
     </div>
+    <div id="sqlDescription" className="container-fluid">
+      <h2>{action}</h2>
+    </div>
     </>
   )
   function Card(props) {
@@ -67,11 +78,11 @@ function App() {
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
-      console.log(cardTitle)
       fetch(`http://localhost:3000/updateCard/${props.id}/${cardTitle}/${cardText}/${cardColor}`)
       .then(response => {
         if(response.ok){
-          location.reload();
+          props.changeCards();
+          setAction(`UPDATE cards SET title=${cardTitle}, text=${cardText}, color=${cardColor} WHERE id=${props.id}`)
         }
         else{
           console.log('Failed to update card');
@@ -84,9 +95,9 @@ function App() {
     function DeleteCard(){
       fetch(`http://localhost:3000/deleteCard/${props.id}`)
       .then(response => {
-        console.log(response.ok)
         if(response.ok){
-          location.reload();
+          props.changeCards();
+          setAction(`DELETE FROM cards WHERE id=${props.id}`)
         }
         else{
           console.log('Failed to delete card');

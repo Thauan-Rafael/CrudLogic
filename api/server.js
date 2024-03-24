@@ -9,21 +9,20 @@ app.use(cors())
 app.listen(3000, () => {
     console.log('App running on port 3000');
 })
-app.post('/', (req,res) => {
-    const { cardTitle, cardText, cardColor } = req.body;
+app.get('/createCard/:title/:text/:color', (req,res) => {
+    cardTitle = req.params.title;
+    cardText = req.params.text;
+    cardColor = req.params.color;
     pool.query('INSERT INTO cards (title,text,color) VALUES (?,?,?)',[cardTitle,cardText,cardColor], (error) => {
-        if (error) {
-          console.error('Error executing query:', error);
-          return;
-        }
-        console.log('Data saved with success');
-        res.redirect('http://localhost:5173')
+        if (error) {console.error('Error executing query:', error);}
+        else{res.json()}
       });
 })
 app.get('/checkCards', (req,res) => {
     pool.query('SELECT * FROM cards', (error, results) => {
-        if (error) {console.error('Error checking row in database:', error);
-            return;
+        if (error) {
+          console.error('Error checking row in database:', error);
+          return;
         }
         if (results.length > 0) {res.json({ exists: true, rows: results });} 
         else {res.json({ exists: false });}

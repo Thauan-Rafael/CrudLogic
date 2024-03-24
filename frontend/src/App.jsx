@@ -1,23 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 function App() { 
   const [cards, setCards] = React.useState([]);
   const [action, setAction] = React.useState('Do a SQL Action and will appear here!')
-  function createCard(event){
-    event.preventDefault();
-    if(cards.length >=3){
-      alert('Maximum 3');
-      return
-    }
-    else if(cards.length < 3){
-      let cardTitle = document.querySelector('#cardTitle').value;
-      let cardText = document.querySelector('#cardText').value;
-      let cardColor = document.querySelector('#cardColor').value;
-      document.querySelector('#entries').submit();
-      setAction(`INSERT INTO cards (title,text,color) VALUES (${cardTitle},${cardText},${cardColor})`);
-    }
-  }
   React.useEffect(() => {
-    function changeCards(){
+    changeCards();
+  },[]);
+  function changeCards(){
       fetch('http://localhost:3000/checkCards')
           .then(response => response.json())
           .then(data => {
@@ -34,14 +22,37 @@ function App() {
               console.error('Error in connection:', error);
           });
     }
-    changeCards();
-  },[]);
+  function createCard(event){
+    event.preventDefault();
+    if(cards.length >=3){
+      alert('Maximum 3');
+      return
+    }
+    else if(cards.length < 3){
+      let cardTitle = document.querySelector('#cardTitle').value;
+      let cardText = document.querySelector('#cardText').value;
+      let cardColor = document.querySelector('#cardColor').value;
+      fetch(`http://localhost:3000/createCard/${cardTitle}/${cardText}/${cardColor}`)
+      .then(response => {
+        if(response.ok){
+          changeCards();
+          setAction(`INSERT INTO cards (title,text,color) VALUES (${cardTitle},${cardText},${cardColor})`);
+        }
+        else{
+          console.log('Failed to create card');
+        }
+      })
+      .catch(error => {
+        console.error('Error creating card:', error);
+      });
+    }
+  }
   return (
     <>
     <div id="pageTitle">
       <h1>CRUD LOGIC</h1>
     </div>
-    <form id="entries" className="container" method="post" action="http://localhost:3000">
+    <form id="entries" className="container">
       <label htmlFor='cardTitle'>Title</label>
       <select id="cardTitle" name="cardTitle">
         <option value='Admin'>Admin</option>
@@ -74,7 +85,10 @@ function App() {
     </>
   )
   function Card(props) {
-    function UpdateCard(){
+    function readCard(){
+      setAction(`SELECT * FROM cards where id=${props.id}`)
+    }
+    function updateCard(){
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
@@ -92,7 +106,7 @@ function App() {
         console.error('Error updating card:', error);
       }); 
     }
-    function DeleteCard(){
+    function deleteCard(){
       fetch(`http://localhost:3000/deleteCard/${props.id}`)
       .then(response => {
         if(response.ok){
@@ -108,12 +122,12 @@ function App() {
       });
     }
     return(
-      <div id="crudCard" className="container" style={{backgroundColor: props.color}}>
+      <div id="crudCard" className="container" style={{backgroundColor: props.color}} onClick={readCard}>
         <h3>{props.title}</h3>
         <h5>{props.text}</h5>
         <div id="cardButtons">
-          <button className="cardBtn btn btn-warning" onClick={UpdateCard}>Update</button>
-          <button className="cardBtn btn btn-danger" onClick={DeleteCard}>Delete</button>
+          <button className="cardBtn btn btn-warning" onClick={updateCard}>Update</button>
+          <button className="cardBtn btn btn-danger" onClick={deleteCard}>Delete</button>
         </div>
         
       </div>

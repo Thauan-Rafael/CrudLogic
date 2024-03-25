@@ -101,6 +101,10 @@ body, #root{
   text-align: center;
   margin: 0;
 }
+.cardAlert{
+  text-align: center;
+  font-size: 125%;
+}
 @media (max-width: 1024px) and (orientation: portrait){
   #entries .btn{
     font-size: 1.8vh;

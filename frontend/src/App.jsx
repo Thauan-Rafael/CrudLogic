@@ -1,4 +1,7 @@
 import React from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() { 
   const [cards, setCards] = React.useState([]);
   const [action, setAction] = React.useState('Do a SQL Action and will appear here!')
@@ -25,7 +28,9 @@ function App() {
   function createCard(event){
     event.preventDefault();
     if(cards.length >=3){
-      alert('Maximum 3');
+      toast.info("3 cards max!",{
+        position: 'bottom-right',className: 'cardAlert'
+      })
       return
     }
     else if(cards.length < 3){
@@ -88,6 +93,7 @@ function App() {
     <div id="sqlDescription" className="container-fluid">
       <h2>{action}</h2>
     </div>
+    <ToastContainer/>
     </>
   )
   function Card(props) {

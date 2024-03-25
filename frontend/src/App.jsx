@@ -53,28 +53,34 @@ function App() {
       <h1>CRUD LOGIC</h1>
     </div>
     <form id="entries" className="container">
+      <div className="entry">
       <label htmlFor='cardTitle'>Title</label>
-      <select id="cardTitle" name="cardTitle">
-        <option value='Admin'>Admin</option>
-        <option value='Hello'>Hello</option>
-        <option value='Main'>Main</option>
-        <option value='Master'>Master</option>
-      </select>
-      <label htmlFor='cardText'>Text</label>
-      <select id="cardText" name="cardText">
-        <option value='Hello World'>Hello World</option>
-        <option value='Nice Day'>Nice Day</option>
-        <option value='Thank You'>Thank You</option>
-        <option value='Goodbye'>Goodbye</option>
-      </select>
-      <label htmlFor='cardColor'>Color</label>
-      <select id="cardColor" name="cardColor">
-        <option value='blue'>Blue</option>
-        <option value='pink'>Pink</option>
-        <option value='purple'>Purple</option>
-        <option value='green'>Green</option>
-      </select>
-      <button className="btn btn-success" onClick={createCard}>Create</button>
+        <select id="cardTitle" name="cardTitle">
+          <option value='Admin'>Admin</option>
+          <option value='Hello'>Hello</option>
+          <option value='Main'>Main</option>
+          <option value='Master'>Master</option>
+        </select>
+      </div>
+      <div className="entry">
+        <label htmlFor='cardText'>Text</label>
+        <select id="cardText" name="cardText">
+          <option value='Hello World'>Hello World</option>
+          <option value='Nice Day'>Nice Day</option>
+          <option value='Thank You'>Thank You</option>
+          <option value='Goodbye'>Goodbye</option>
+        </select>
+      </div>
+      <div className="entry">  
+        <label htmlFor='cardColor'>Color</label>
+        <select id="cardColor" name="cardColor">
+          <option value='blue'>Blue</option>
+          <option value='pink'>Pink</option>
+          <option value='purple'>Purple</option>
+          <option value='green'>Green</option>
+        </select>
+      </div>
+      <button className="btn btn-success" onClick={createCard}>Create Card</button>
     </form>
     <div id="cardsSection" className="container-fluid">
     {cards}

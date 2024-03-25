@@ -18,15 +18,33 @@ body, #root{
 #entries{
   margin-top: 2%;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 2fr;
+  grid-template-columns: 2fr 2fr 2fr 2fr;
   gap: 1%;
   text-align: center;
   align-items: center;
+}
+.entry{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+.entry label{
+  font-size: 2vw;
+}
+.entry select{
+  margin-top: 2%;
+  font-size: 1.6vw;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 10vh;
+  padding: 1%;
+  width: 12vw;
 }
 .btn{
   border: 2px solid black;
   border-radius: 20vh;
   text-shadow: 2px 2px black;
+  font-size: 2vw;
 }
 .btn:hover{
   color: white;
@@ -54,6 +72,12 @@ body, #root{
   transform: scale(1.1);
   cursor: pointer;
 }
+#crudCard h3{
+  font-size: 5vh;
+}
+#crudCard h5{
+  font-size: 4vh;
+}
 #cardButtons{
   display: flex;
 }
@@ -74,4 +98,73 @@ body, #root{
 }
 #sqlDescription h2{
   font-size: 2vw;
+  text-align: center;
+  margin: 0;
+}
+@media (max-width: 1024px) and (orientation: portrait){
+  #entries .btn{
+    font-size: 1.8vh;
+  }
+  .entry label{
+    font-size: 2vh;
+  }
+  .entry select{
+    font-size: 1.5vh;
+    width: 21vw;
+  }
+  #cardsSection{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  #crudCard{
+    width: 90%;
+    height: 80%;
+  }
+  #crudCard h3{
+    font-size: 3.5vh;
+  }
+  #crudCard h5{
+    font-size: 2.5vh;
+  }
+  #cardButtons{
+    gap: 3%;
+  }
+  .cardBtn{
+    color: white;
+    font-size: 2.5vh;
+    width: 50%;
+    height: 100%;
+    margin: 0 auto 0 auto;
+    padding: 1%;
+  }
+  #sqlDescription h2{
+    font-size: 4vw;
+    padding: 1%;
+  }
+}
+@media (max-width: 1024px) and (max-height: 767px) and (orientation: landscape){
+  .entry label{
+    font-size: 6vh;
+  }
+  .entry select{
+    font-size: 4.5vh;
+    width: 17vw;
+  }
+  #crudCard{
+    height: 85%;
+  }
+  #crudCard h3{
+    font-size: 6.5vh;
+  }
+  #crudCard h5{
+    font-size: 5vh;
+  }
+  .cardBtn{
+    font-size: 90%;
+  }
+  #sqlDescription h2{
+    font-size: 1.8vw;
+    margin: 0;
+  } 
 }

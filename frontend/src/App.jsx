@@ -6,7 +6,7 @@ function App() {
     changeCards();
   },[]);
   function changeCards(){
-      fetch('http://localhost:3000/checkCards')
+      fetch('https://crudlogic-server.onrender.com/checkCards')
           .then(response => response.json())
           .then(data => {
               if (data.exists) {
@@ -32,7 +32,7 @@ function App() {
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
-      fetch(`http://localhost:3000/createCard/${cardTitle}/${cardText}/${cardColor}`)
+      fetch(`https://crudlogic-server.onrender.com/createCard/${cardTitle}/${cardText}/${cardColor}`)
       .then(response => {
         if(response.ok){
           changeCards();
@@ -98,7 +98,7 @@ function App() {
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
-      fetch(`http://localhost:3000/updateCard/${props.id}/${cardTitle}/${cardText}/${cardColor}`)
+      fetch(`https://crudlogic-server.onrender.com/updateCard/${props.id}/${cardTitle}/${cardText}/${cardColor}`)
       .then(response => {
         if(response.ok){
           props.changeCards();
@@ -113,7 +113,7 @@ function App() {
       }); 
     }
     function deleteCard(){
-      fetch(`http://localhost:3000/deleteCard/${props.id}`)
+      fetch(`https://crudlogic-server.onrender.com/deleteCard/${props.id}`)
       .then(response => {
         if(response.ok){
           props.changeCards();

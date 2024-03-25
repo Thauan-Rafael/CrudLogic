@@ -12,15 +12,19 @@ function App() {
       fetch('https://crudlogic-server.onrender.com/checkCards')
           .then(response => response.json())
           .then(data => {
-              if (data.exists) {
+              if(data.exists) {
                 let rowCards = data.rows;
                 setCards(cards => {
-                return rowCards.map(row => {
-                  let { title: dbTitle, text: dbText, color: dbColor } = row;
-                   return <Card key={row.id} id={row.id} title={dbTitle} text={dbText} color={dbColor} changeCards={changeCards}></Card>;
+                  return rowCards.map(row => {
+                    let { title: dbTitle, text: dbText, color: dbColor } = row;
+                    return <Card key={row.id} id={row.id} title={dbTitle} text={dbText} color={dbColor} changeCards={changeCards}></Card>;
+                  })
                 })
-              })
-            }})
+              }
+              else if(!data.exists){
+                setCards(cards)
+              }
+          })
           .catch(error => {
               console.error('Error in connection:', error);
           });
@@ -28,28 +32,31 @@ function App() {
   function createCard(event){
     event.preventDefault();
     if(cards.length >=3){
-      toast.info("3 cards max!",{
-        position: 'bottom-right',className: 'cardAlert'
-      })
+      toast.info("3 cards max!",{position: 'bottom-right',className: 'cardAlert'})
       return
     }
     else if(cards.length < 3){
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
-      fetch(`https://crudlogic-server.onrender.com/createCard/${cardTitle}/${cardText}/${cardColor}`)
-      .then(response => {
-        if(response.ok){
-          changeCards();
-          setAction(`INSERT INTO cards (title,text,color) VALUES (${cardTitle},${cardText},${cardColor})`);
-        }
-        else{
-          console.log('Failed to create card');
-        }
-      })
-      .catch(error => {
-        console.error('Error creating card:', error);
-      });
+      if ((cardTitle == 'Admin' || cardTitle == 'Hello' || cardTitle == 'Main' || cardTitle == 'Master') &&
+      (cardText == 'Hello World' || cardText == 'Nice Day' || cardText == 'Thank You' || cardText == 'Goodbye') &&
+      (cardColor == 'blue' || cardColor == 'pink' || cardColor == 'purple' || cardColor == 'green')){
+        fetch(`https://crudlogic-server.onrender.com/createCard/${cardTitle}/${cardText}/${cardColor}`)
+        .then(response => {
+          if(response.ok){
+            changeCards();
+            setAction(`INSERT INTO cards (title,text,color) VALUES (${cardTitle},${cardText},${cardColor})`);
+          }
+          else{
+            console.log('Failed to create card');
+          }
+        })
+        .catch(error => {
+          console.error('Error creating card:', error);
+        });
+      }
+      else{toast.info("Invalid values!",{position: 'bottom-right',className: 'cardAlert'}) }
     }
   }
   return (
@@ -104,20 +111,25 @@ function App() {
       let cardTitle = document.querySelector('#cardTitle').value;
       let cardText = document.querySelector('#cardText').value;
       let cardColor = document.querySelector('#cardColor').value;
-      fetch(`https://crudlogic-server.onrender.com/updateCard/${props.id}/${cardTitle}/${cardText}/${cardColor}`)
-      .then(response => {
-        if(response.ok){
-          props.changeCards();
-          setAction(`UPDATE cards SET title=${cardTitle}, text=${cardText}, color=${cardColor} WHERE id=${props.id}`)
-        }
-        else{
-          console.log('Failed to update card');
-        }
-      })
-      .catch(error => {
-        console.error('Error updating card:', error);
-      }); 
-    }
+      if ((cardTitle == 'Admin' || cardTitle == 'Hello' || cardTitle == 'Main' || cardTitle == 'Master') &&
+      (cardText == 'Hello World' || cardText == 'Nice Day' || cardText == 'Thank You' || cardText == 'Goodbye') &&
+      (cardColor == 'blue' || cardColor == 'pink' || cardColor == 'purple' || cardColor == 'green')){
+            fetch(`https://crudlogic-server.onrender.com/updateCard/${props.id}/${cardTitle}/${cardText}/${cardColor}`)
+            .then(response => {
+              if(response.ok){
+                props.changeCards();
+                setAction(`UPDATE cards SET title=${cardTitle}, text=${cardText}, color=${cardColor} WHERE id=${props.id}`)
+              }
+              else{
+                console.log('Failed to update card');
+              }
+            })
+            .catch(error => {
+              console.error('Error updating card:', error);
+            });
+      }
+      else{toast.info("Invalid values!",{position: 'bottom-right',className: 'cardAlert'}) }
+      }
     function deleteCard(){
       fetch(`https://crudlogic-server.onrender.com/deleteCard/${props.id}`)
       .then(response => {

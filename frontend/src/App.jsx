@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() { 
   const [cards, setCards] = React.useState([]);
   const [action, setAction] = React.useState('Do a SQL Action and will appear here!')
+  const [loading, setLoading] = React.useState(true)
   React.useEffect(() => {
     changeCards();
   },[]);
@@ -20,6 +21,7 @@ function App() {
                     return <Card key={row.id} id={row.id} title={dbTitle} text={dbText} color={dbColor} changeCards={changeCards}></Card>;
                   })
                 })
+                setLoading(false);
               }
               else if(!data.exists){
                 setCards(cards)
@@ -27,6 +29,7 @@ function App() {
           })
           .catch(error => {
               console.error('Error in connection:', error);
+              setLoading(false);
           });
     }
   function createCard(event){
@@ -95,7 +98,7 @@ function App() {
       <button className="btn btn-success" onClick={createCard}>Create Card</button>
     </form>
     <div id="cardsSection" className="container-fluid">
-    {cards}
+    {loading ? <p id="loadingText">Loading Cards...</p> : null}{cards}
     </div>
     <div id="sqlDescription" className="container-fluid">
       <h2>{action}</h2>

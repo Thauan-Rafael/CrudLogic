@@ -72,6 +72,10 @@ body, #root{
   transform: scale(1.1);
   cursor: pointer;
 }
+#loadingText{
+  margin: 0 auto 0 auto;
+  font-size: 3.5vh;
+}
 #crudCard h3{
   font-size: 5vh;
 }
@@ -124,6 +128,7 @@ body, #root{
   #crudCard{
     width: 90%;
     height: 80%;
+    max-height: 250px;
   }
   #crudCard h3{
     font-size: 3.5vh;

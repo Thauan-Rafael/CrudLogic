@@ -26,7 +26,7 @@ app.get('/createCard/:title/:text/:color', (req,res) => {
             }); 
         }
         else if(totalCards >= 3){
-            window.location.replace('https://crudlogic.onrender.com/');
+            res.status(200).json({ redirectTo: 'https://crudlogic.onrender.com/' });
         }
     })
 })

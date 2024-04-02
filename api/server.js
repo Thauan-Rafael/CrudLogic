@@ -25,6 +25,9 @@ app.get('/createCard/:title/:text/:color', (req,res) => {
                 else{res.json()}
             }); 
         }
+        else if(totalCards >= 3){
+            window.location.replace('https://crudlogic.onrender.com/');
+        }
     })
 })
 app.get('/checkCards', (req,res) => {
